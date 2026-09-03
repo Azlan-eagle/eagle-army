@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eagle Army — One Chat. One Community. One Vibe.</title>
+<meta name="description" content="Eagle Army is a Snapchat community built around friendship, entertainment, conversations and unforgettable moments. Owned by Azlan.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦅</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#08080a;
+    --charcoal:#141310;
+    --charcoal-2:#1c1a16;
+    --line:rgba(198,161,91,0.18);
+    --gold:#c6a15b;
+    --gold-bright:#eccd85;
+    --gold-dim:#8a713f;
+    --white:#f4f1ea;
+    --grey:#9a958a;
+    --grey-dim:#6b6760;
+    --radius-sm:10px;
+    --radius-lg:26px;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Unbounded',sans-serif;
+    letter-spacing:-0.01em;
+  }
+
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  img,svg{display:block;max-width:100%;}
+
+  ::selection{background:var(--gold);color:var(--black);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
+  }
+
+  .wrap{
+    width:min(1180px, 92%);
+    margin-inline:auto;
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    padding:20px 0;
+    background:rgba(8,8,10,0);
+    border-bottom:1px solid transparent;
+    transition:background .4s var(--ease), border-color .4s var(--ease), padding .4s var(--ease);
+  }
+  header.nav.scrolled{
+    background:rgba(8,8,10,0.82);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--line);
+    padding:14px 0;
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Unbounded',sans-serif;
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:0.02em;
+  }
+  .brand svg{width:26px;height:26px;}
+  .nav-links{
+    display:flex;
+    gap:36px;
+    font-size:14px;
+    font-weight:500;
+    color:var(--grey);
+  }
+  .nav-links a{
+    position:relative;
+    transition:color .3s;
+    padding:4px 0;
+  }
+  .nav-links a::after{
+    content:'';
+    position:absolute;
+    left:0;bottom:0;
+    width:0%;height:1px;
+    background:var(--gold-bright);
+    transition:width .35s var(--ease);
+  }
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    font-size:13px;
+    font-weight:600;
+    padding:10px 20px;
+    border-radius:999px;
+    border:1px solid var(--gold-dim);
+    color:var(--gold-bright);
+    transition:all .3s var(--ease);
+    white-space:nowrap;
+  }
+  .nav-cta:hover{
+    background:var(--gold);
+    color:var(--black);
+    border-color:var(--gold);
+    box-shadow:0 0 24px rgba(198,161,91,0.35);
+  }
+  .nav-toggle{
+    display:none;
+    width:40px;height:40px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:rgba(244,241,234,0.03);
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .nav-toggle span{
+    position:relative;
+    width:16px;height:1px;
+    background:var(--gold-bright);
+    transition:background .3s;
+  }
+  .nav-toggle span::before,
+  .nav-toggle span::after{
+    content:'';
+    position:absolute;
+    left:0;
+    width:16px;height:1px;
+    background:var(--gold-bright);
+    transition:transform .35s var(--ease), top .35s var(--ease);
+  }
+  .nav-toggle span::before{top:-5px;}
+  .nav-toggle span::after{top:5px;}
+  .nav-toggle.open span{background:transparent;}
+  .nav-toggle.open span::before{top:0;transform:rotate(45deg);}
+  .nav-toggle.open span::after{top:0;transform:rotate(-45deg);}
+
+  .mobile-menu{
+    position:fixed;
+    inset:0;
+    z-index:99;
+    background:rgba(8,8,10,0.98);
+    backdrop-filter:blur(20px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:34px;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-12px);
+    transition:opacity .4s var(--ease), transform .4s var(--ease), visibility .4s;
+  }
+  .mobile-menu.open{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+  }
+  .mobile-menu a{
+    font-family:'Unbounded',sans-serif;
+    font-size:1.6rem;
+    font-weight:600;
+    color:var(--white);
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .5s var(--ease), transform .5s var(--ease), color .3s;
+  }
+  .mobile-menu.open a{opacity:1;transform:translateY(0);}
+  .mobile-menu a:hover{color:var(--gold-bright);}
+  .mobile-menu a:nth-child(1){transition-delay:.08s;}
+  .mobile-menu a:nth-child(2){transition-delay:.14s;}
+  .mobile-menu a:nth-child(3){transition-delay:.2s;}
+  .mobile-menu a:nth-child(4){transition-delay:.26s;}
+  .mobile-menu a:nth-child(5){transition-delay:.32s;}
+  .mobile-menu a:nth-child(6){transition-delay:.38s;}
+  .mobile-menu .btn{margin-top:10px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:160px 0 100px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 28%, rgba(198,161,91,0.10), transparent 65%),
+      radial-gradient(ellipse 100% 60% at 50% 100%, rgba(198,161,91,0.05), transparent 70%),
+      var(--black);
+  }
+  .hero-eagle{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-52%);
+    width:min(1400px, 165vw);
+    opacity:0.5;
+    filter:drop-shadow(0 0 60px rgba(198,161,91,0.12));
+    animation:eagleFloat 9s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes eagleFloat{
+    0%,100%{transform:translate(-50%,-52%) scale(1);}
+    50%{transform:translate(-50%,-54%) scale(1.015);}
+  }
+  .hero-noise{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 120% 80% at 50% 0%, transparent 40%, var(--black) 92%);
+    pointer-events:none;
+  }
+  .hero-content{
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .hero-kicker{
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:0.12em;
+    color:var(--gold-bright);
+    margin-bottom:22px;
+    opacity:0;
+    animation:riseIn .9s var(--ease) .1s forwards;
+  }
+  .hero-kicker::before{
+    content:'';
+    display:inline-block;
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--gold-bright);
+    margin-right:10px;
+    box-shadow:0 0 10px var(--gold-bright);
+    vertical-align:middle;
+  }
+  .hero h1{
+    font-size:clamp(3.4rem, 10vw, 8.2rem);
+    font-weight:900;
+    line-height:0.95;
+    background:linear-gradient(180deg, #fff 0%, var(--white) 45%, var(--gold-bright) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    opacity:0;
+    animation:riseIn 1s var(--ease) .25s forwards;
+  }
+  .hero-tagline{
+    margin-top:22px;
+    font-family:'Unbounded',sans-serif;
+    font-size:clamp(1rem, 2vw, 1.35rem);
+    font-weight:400;
+    color:var(--grey);
+    opacity:0;
+    animation:riseIn 1s var(--ease) .4s forwards;
+  }
+  .hero-desc{
+    margin-top:26px;
+    max-width:560px;
+    font-size:16px;
+    color:var(--grey);
+    opacity:0;
+    animation:riseIn 1s var(--ease) .55s forwards;
+  }
+  .hero-actions{
+    margin-top:44px;
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    justify-content:center;
+    opacity:0;
+    animation:riseIn 1s var(--ease) .7s forwards;
+  }
+  @keyframes riseIn{
+    from{opacity:0;transform:translateY(22px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:17px 34px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:0.03em;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .35s, border-color .35s, color .35s;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{
+    background:linear-gradient(135deg, var(--gold-bright), var(--gold));
+    color:#181206;
+    box-shadow:0 0 0 rgba(198,161,91,0);
+  }
+  .btn-primary:hover{
+    box-shadow:0 8px 34px rgba(198,161,91,0.4);
+    transform:translateY(-2px);
+  }
+  .btn-ghost{
+    background:rgba(244,241,234,0.03);
+    border-color:rgba(244,241,234,0.18);
+    color:var(--white);
+    backdrop-filter:blur(6px);
+  }
+  .btn-ghost:hover{
+    border-color:var(--gold-bright);
+    color:var(--gold-bright);
+    transform:translateY(-2px);
+  }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:34px;left:50%;
+    transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;
+    gap:8px;
+    color:var(--grey-dim);
+    font-size:11px;
+    letter-spacing:0.1em;
+    z-index:2;
+    animation:riseIn 1s var(--ease) 1s forwards;
+    opacity:0;
+  }
+  .scroll-cue .line{
+    width:1px;height:34px;
+    background:linear-gradient(var(--gold-dim), transparent);
+    animation:cueMove 2s ease-in-out infinite;
+  }
+  @keyframes cueMove{
+    0%{transform:scaleY(0.4);opacity:0.3;}
+    50%{transform:scaleY(1);opacity:1;}
+    100%{transform:scaleY(0.4);opacity:0.3;}
+  }
+
+  /* ---------- SECTION SCAFFOLDING ---------- */
+  section{
+    position:relative;
+    padding:150px 0;
+  }
+  .section-tight{padding:110px 0;}
+
+  .reveal{
+    opacity:0;
+    transform:translateY(34px);
+    transition:opacity 1s var(--ease), transform 1s var(--ease);
+  }
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+
+  .eyebrow-mark{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    color:var(--gold);
+    font-weight:600;
+    font-size:13px;
+    margin-bottom:18px;
+  }
+  .eyebrow-mark svg{width:16px;height:16px;}
+
+  h2.section-title{
+    font-size:clamp(2.2rem, 4.4vw, 3.6rem);
+    font-weight:700;
+    line-height:1.08;
+    max-width:16ch;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about{
+    border-top:1px solid var(--line);
+    background:linear-gradient(180deg, var(--black), var(--charcoal) 60%, var(--black));
+  }
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:80px;
+    align-items:center;
+  }
+  .about-text p{
+    margin-top:24px;
+    font-size:17px;
+    color:var(--grey);
+    max-width:46ch;
+  }
+  .owner-card{
+    position:relative;
+    padding:46px 40px;
+    border-radius:var(--radius-lg);
+    background:linear-gradient(155deg, rgba(198,161,91,0.09), rgba(20,19,16,0.5));
+    border:1px solid var(--line);
+    backdrop-filter:blur(18px);
+    text-align:center;
+    overflow:hidden;
+    transition:border-color .4s, box-shadow .4s, transform .4s var(--ease);
+  }
+  .owner-card:hover{
+    border-color:rgba(198,161,91,0.45);
+    box-shadow:0 0 46px rgba(198,161,91,0.14);
+    transform:translateY(-4px);
+  }
+  .owner-card::before{
+    content:'';
+    position:absolute;
+    top:-40%;left:-20%;
+    width:70%;height:140%;
+    background:radial-gradient(circle, rgba(198,161,91,0.18), transparent 70%);
+    pointer-events:none;
+  }
+  .owner-card .tag{
+    font-size:12px;
+    letter-spacing:0.14em;
+    color:var(--gold);
+    font-weight:600;
+  }
+  .owner-card .name{
+    font-family:'Unbounded',sans-serif;
+    font-size:2.4rem;
+    font-weight:700;
+    margin-top:14px;
+    background:linear-gradient(135deg,#fff, var(--gold-bright));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .owner-card .role{
+    margin-top:8px;
+    font-size:14px;
+    color:var(--grey);
+  }
+
+  /* ---------- COMMUNITY CARDS ---------- */
+  .community{
+    border-top:1px solid var(--line);
+  }
+  .card-grid{
+    margin-top:64px;
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:22px;
+  }
+  .feature-card{
+    padding:38px 34px;
+    border-radius:var(--radius-lg);
+    background:rgba(244,241,234,0.025);
+    border:1px solid var(--line);
+    backdrop-filter:blur(10px);
+    position:relative;
+    overflow:hidden;
+    transition:transform .5s var(--ease), border-color .5s var(--ease), background .5s var(--ease);
+  }
+  .feature-card:nth-child(1){grid-column:span 7;}
+  .feature-card:nth-child(2){grid-column:span 5;}
+  .feature-card:nth-child(3){grid-column:span 5;}
+  .feature-card:nth-child(4){grid-column:span 7;}
+  .card-grid{grid-template-columns:repeat(12, 1fr);}
+
+  .feature-card::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:radial-gradient(220px circle at var(--mx,50%) var(--my,0%), rgba(198,161,91,0.14), transparent 70%);
+    opacity:0;
+    transition:opacity .5s;
+    pointer-events:none;
+  }
+  .feature-card:hover::after{opacity:1;}
+  .feature-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(198,161,91,0.4);
+    background:rgba(244,241,234,0.045);
+  }
+  .feature-icon{
+    font-size:28px;
+    margin-bottom:20px;
+    display:inline-block;
+  }
+  .feature-card h3{
+    font-family:'Unbounded',sans-serif;
+    font-size:1.15rem;
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .feature-card p{
+    color:var(--grey);
+    font-size:15px;
+    max-width:38ch;
+  }
+
+  /* ---------- OWNER SECTION ---------- */
+  .owner-section{
+    border-top:1px solid var(--line);
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(198,161,91,0.08), transparent 65%),
+      var(--charcoal);
+    text-align:center;
+  }
+  .owner-avatar{
+    width:132px;height:132px;
+    margin:0 auto 30px;
+    border-radius:50%;
+    position:relative;
+    background:linear-gradient(155deg, var(--charcoal-2), var(--black));
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .owner-avatar::before{
+    content:'';
+    position:absolute;
+    inset:-10px;
+    border-radius:50%;
+    border:1px solid rgba(198,161,91,0.3);
+    animation:ringPulse 3.5s ease-in-out infinite;
+  }
+  @keyframes ringPulse{
+    0%,100%{opacity:0.35;transform:scale(1);}
+    50%{opacity:0.85;transform:scale(1.04);}
+  }
+  .owner-avatar svg{width:52px;height:52px;color:var(--gold-bright);}
+  .owner-section .founder-name{
+    font-family:'Unbounded',sans-serif;
+    font-size:clamp(2.6rem, 6vw, 4.4rem);
+    font-weight:900;
+    letter-spacing:0.01em;
+  }
+  .owner-section .founder-title{
+    margin-top:14px;
+    font-size:15px;
+    color:var(--gold-bright);
+    font-weight:500;
+    letter-spacing:0.03em;
+  }
+  .owner-section .founder-line{
+    margin:22px auto 0;
+    max-width:36ch;
+    color:var(--grey);
+    font-size:16px;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq{
+    border-top:1px solid var(--line);
+    background:linear-gradient(180deg, var(--black), var(--charcoal-2) 50%, var(--black));
+  }
+  .faq-layout{
+    display:grid;
+    grid-template-columns:0.8fr 1.2fr;
+    gap:70px;
+  }
+  .faq-intro{position:sticky;top:120px;align-self:start;}
+  .faq-intro p{
+    margin-top:20px;
+    color:var(--grey);
+    font-size:16px;
+    max-width:34ch;
+  }
+  .faq-list{
+    display:flex;
+    flex-direction:column;
+  }
+  .faq-item{
+    border-bottom:1px solid var(--line);
+    padding:6px 0;
+  }
+  .faq-item:first-child{border-top:1px solid var(--line);}
+  .faq-question{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    background:none;
+    border:none;
+    text-align:left;
+    padding:24px 4px;
+    cursor:pointer;
+    font-family:'Unbounded',sans-serif;
+    font-size:1rem;
+    font-weight:500;
+    color:var(--white);
+    transition:color .3s;
+  }
+  .faq-item.open .faq-question,
+  .faq-question:hover{color:var(--gold-bright);}
+  .faq-icon{
+    position:relative;
+    flex-shrink:0;
+    width:22px;height:22px;
+    border-radius:50%;
+    border:1px solid var(--gold-dim);
+  }
+  .faq-icon::before,
+  .faq-icon::after{
+    content:'';
+    position:absolute;
+    top:50%;left:50%;
+    background:var(--gold-bright);
+    transition:transform .4s var(--ease);
+  }
+  .faq-icon::before{width:9px;height:1px;transform:translate(-50%,-50%);}
+  .faq-icon::after{width:1px;height:9px;transform:translate(-50%,-50%);}
+  .faq-item.open .faq-icon{border-color:var(--gold-bright);}
+  .faq-item.open .faq-icon::after{transform:translate(-50%,-50%) rotate(90deg) scaleY(0);}
+  .faq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .5s var(--ease), opacity .4s;
+    opacity:0;
+  }
+  .faq-item.open .faq-answer{opacity:1;}
+  .faq-answer p{
+    padding:0 4px 26px;
+    color:var(--grey);
+    font-size:15px;
+    max-width:56ch;
+  }
+
+  /* ---------- SNAPCHAT SECTION ---------- */
+  .snap{
+    border-top:1px solid var(--line);
+    text-align:center;
+    background:var(--black);
+  }
+  .snap-panel{
+    position:relative;
+    padding:80px 40px;
+    border-radius:32px;
+    background:linear-gradient(160deg, rgba(198,161,91,0.10), rgba(20,19,16,0.4));
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .snap-panel::before{
+    content:'';
+    position:absolute;
+    top:-60%;left:50%;
+    transform:translateX(-50%);
+    width:600px;height:600px;
+    background:radial-gradient(circle, rgba(198,161,91,0.16), transparent 70%);
+    pointer-events:none;
+  }
+  .snap-icon{
+    width:64px;height:64px;
+    margin:0 auto 26px;
+    color:var(--gold-bright);
+    position:relative;
+    z-index:1;
+  }
+  .snap h2{
+    position:relative;z-index:1;
+    font-size:clamp(2rem, 4.4vw, 3.1rem);
+    font-weight:700;
+  }
+  .snap p{
+    position:relative;z-index:1;
+    margin:18px auto 36px;
+    max-width:44ch;
+    color:var(--grey);
+    font-size:16px;
+  }
+  .snap-note{
+    position:relative;z-index:1;
+    margin-top:18px;
+    font-size:12.5px;
+    color:var(--grey-dim);
+    font-style:italic;
+  }
+  .snap-handle{
+    position:relative;z-index:1;
+    display:flex;
+    width:fit-content;
+    align-items:center;
+    gap:9px;
+    margin:0 auto 30px;
+    padding:9px 20px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:rgba(244,241,234,0.03);
+    font-family:'Unbounded',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    color:var(--gold-bright);
+    letter-spacing:0.01em;
+  }
+  .live-dot{
+    width:7px;height:7px;
+    border-radius:50%;
+    background:#5ee87a;
+    box-shadow:0 0 8px #5ee87a;
+    flex-shrink:0;
+    animation:livePulse 1.8s ease-in-out infinite;
+  }
+  @keyframes livePulse{
+    0%,100%{opacity:1;transform:scale(1);}
+    50%{opacity:0.45;transform:scale(0.75);}
+  }
+  .faq-answer strong{color:var(--gold-bright);font-weight:600;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:70px 0 40px;
+    text-align:center;
+  }
+  footer .foot-brand{
+    font-family:'Unbounded',sans-serif;
+    font-weight:700;
+    font-size:1.3rem;
+    letter-spacing:0.03em;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+  }
+  footer .foot-brand svg{width:22px;height:22px;color:var(--gold-bright);}
+  footer .foot-tag{
+    margin-top:12px;
+    color:var(--grey);
+    font-size:14px;
+  }
+  .foot-links{
+    margin-top:34px;
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    font-size:13px;
+    color:var(--grey-dim);
+  }
+  .foot-links a{transition:color .3s;}
+  .foot-links a:hover{color:var(--gold-bright);}
+  footer .copyright{
+    margin-top:34px;
+    font-size:12px;
+    color:var(--grey-dim);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 880px){
+    .about-grid{grid-template-columns:1fr;gap:50px;text-align:center;}
+    .about-text p{margin-inline:auto;}
+    .feature-card:nth-child(1),
+    .feature-card:nth-child(2),
+    .feature-card:nth-child(3),
+    .feature-card:nth-child(4){grid-column:span 12;}
+    .faq-layout{grid-template-columns:1fr;gap:36px;}
+    .faq-intro{position:static;text-align:center;}
+    .faq-intro p{margin-inline:auto;}
+  }
+
+  @media (max-width: 720px){
+    .nav-links{display:none;}
+    .nav-cta{display:none;}
+    .nav-toggle{display:flex;}
+    section{padding:100px 0;}
+    .hero{padding-top:130px;}
+    .hero-eagle{width:230vw;opacity:0.4;}
+    .snap-panel{padding:56px 24px;border-radius:24px;}
+    .owner-card{padding:36px 26px;}
+    .faq-question{font-size:0.95rem;padding:20px 2px;gap:14px;}
+    .btn{padding:16px 26px;font-size:13px;}
+    .hero-actions{width:100%;}
+    .hero-actions .btn{flex:1;min-width:150px;}
+    h2.section-title{max-width:100%;}
+  }
+
+  @media (max-width: 420px){
+    .hero h1{font-size:clamp(2.6rem, 15vw, 4rem);}
+    .brand span.brand-text{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="nav" id="siteNav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 18 L52 40 L88 62 L54 56 L50 90 L46 56 L12 62 L48 40 Z" fill="url(#navGrad)"/>
+        <defs>
+          <linearGradient id="navGrad" x1="0" y1="0" x2="100" y2="100">
+            <stop offset="0" stop-color="#eccd85"/>
+            <stop offset="1" stop-color="#8a713f"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="brand-text">EAGLE ARMY</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#top">Home</a>
+      <a href="#about">About</a>
+      <a href="#community">Community</a>
+      <a href="#owner">Owner</a>
+      <a href="#faq">FAQ</a>
+      <a href="#snapchat">Snapchat</a>
+    </nav>
+    <a href="#snapchat" class="nav-cta">Join Now</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#top">Home</a>
+  <a href="#about">About</a>
+  <a href="#community">Community</a>
+  <a href="#owner">Owner</a>
+  <a href="#faq">FAQ</a>
+  <a href="#snapchat">Snapchat</a>
+  <a href="#snapchat" class="btn btn-primary">Join the Community</a>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="eagle-parallax" id="eagleParallax">
+  <svg class="hero-eagle" viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="glow" cx="50%" cy="40%" r="58%">
+        <stop offset="0%" stop-color="#c6a15b" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#c6a15b" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="wingGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#3a3327"/>
+        <stop offset="55%" stop-color="#1c1a16"/>
+        <stop offset="100%" stop-color="#0a0a0b"/>
+      </linearGradient>
+      <linearGradient id="wingStroke" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#eccd85" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#c6a15b" stop-opacity="0.15"/>
+      </linearGradient>
+    </defs>
+    <circle cx="500" cy="260" r="340" fill="url(#glow)"/>
+
+    <!-- tail feathers -->
+    <g transform="translate(500,455)" fill="url(#wingGrad)" stroke="url(#wingStroke)" stroke-width="1">
+      <path transform="rotate(75)"  d="M0,-7 C21,-10 52.5,-6 70,0 C52.5,6 21,10 0,7 C-3,4 -3,-4 0,-7 Z"/>
+      <path transform="rotate(90)"  d="M0,-7 C21,-10 52.5,-6 70,0 C52.5,6 21,10 0,7 C-3,4 -3,-4 0,-7 Z"/>
+      <path transform="rotate(105)" d="M0,-7 C21,-10 52.5,-6 70,0 C52.5,6 21,10 0,7 C-3,4 -3,-4 0,-7 Z"/>
+    </g>
+
+    <!-- right wing: fanned flight feathers -->
+    <g transform="translate(500,258)" fill="url(#wingGrad)" stroke="url(#wingStroke)" stroke-width="1.2">
+      <path transform="rotate(-100)" d="M0,-8.4 C54,-12 135,-7.2 180,0 C135,7.2 54,12 0,8.4 C-3.6,4.8 -3.6,-4.8 0,-8.4 Z"/>
+      <path transform="rotate(-82)"  d="M0,-9.8 C72,-14 180,-8.4 240,0 C180,8.4 72,14 0,9.8 C-4.2,5.6 -4.2,-5.6 0,-9.8 Z"/>
+      <path transform="rotate(-64)"  d="M0,-11.2 C90,-16 225,-9.6 300,0 C225,9.6 90,16 0,11.2 C-4.8,6.4 -4.8,-6.4 0,-11.2 Z"/>
+      <path transform="rotate(-46)"  d="M0,-12.6 C105,-18 262.5,-10.8 350,0 C262.5,10.8 105,18 0,12.6 C-5.4,7.2 -5.4,-7.2 0,-12.6 Z"/>
+      <path transform="rotate(-28)"  d="M0,-14 C114,-20 285,-12 380,0 C285,12 114,20 0,14 C-6,8 -6,-8 0,-14 Z"/>
+      <path transform="rotate(-10)"  d="M0,-14 C108,-20 270,-12 360,0 C270,12 108,20 0,14 C-6,8 -6,-8 0,-14 Z"/>
+    </g>
+
+    <!-- left wing (mirrored) -->
+    <g transform="translate(500,258) scale(-1,1)" fill="url(#wingGrad)" stroke="url(#wingStroke)" stroke-width="1.2">
+      <path transform="rotate(-100)" d="M0,-8.4 C54,-12 135,-7.2 180,0 C135,7.2 54,12 0,8.4 C-3.6,4.8 -3.6,-4.8 0,-8.4 Z"/>
+      <path transform="rotate(-82)"  d="M0,-9.8 C72,-14 180,-8.4 240,0 C180,8.4 72,14 0,9.8 C-4.2,5.6 -4.2,-5.6 0,-9.8 Z"/>
+      <path transform="rotate(-64)"  d="M0,-11.2 C90,-16 225,-9.6 300,0 C225,9.6 90,16 0,11.2 C-4.8,6.4 -4.8,-6.4 0,-11.2 Z"/>
+      <path transform="rotate(-46)"  d="M0,-12.6 C105,-18 262.5,-10.8 350,0 C262.5,10.8 105,18 0,12.6 C-5.4,7.2 -5.4,-7.2 0,-12.6 Z"/>
+      <path transform="rotate(-28)"  d="M0,-14 C114,-20 285,-12 380,0 C285,12 114,20 0,14 C-6,8 -6,-8 0,-14 Z"/>
+      <path transform="rotate(-10)"  d="M0,-14 C108,-20 270,-12 360,0 C270,12 108,20 0,14 C-6,8 -6,-8 0,-14 Z"/>
+    </g>
+
+    <!-- body -->
+    <path d="M500,205 C482,225 472,270 478,320 C482,370 488,420 494,455 L500,472 L506,455
+             C512,420 518,370 522,320 C528,270 518,225 500,205 Z"
+          fill="url(#wingGrad)" stroke="url(#wingStroke)" stroke-width="1.2"/>
+
+    <!-- head -->
+    <circle cx="500" cy="190" r="23" fill="url(#wingGrad)" stroke="url(#wingStroke)" stroke-width="1.2"/>
+
+    <!-- beak -->
+    <path d="M492,208 L500,195 L508,208 C508,220 502,231 500,238 C498,231 492,220 492,208 Z"
+          fill="#d9b56c" stroke="#8a713f" stroke-width="0.8"/>
+
+    <!-- eyes -->
+    <circle cx="491" cy="187" r="2.4" fill="#eccd85"/>
+    <circle cx="509" cy="187" r="2.4" fill="#eccd85"/>
+  </svg>
+  </div>
+  <div class="hero-particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="hero-noise"></div>
+
+  <div class="hero-content wrap">
+    <span class="hero-kicker">A PRIVATE SNAPCHAT COMMUNITY</span>
+    <h1>EAGLE ARMY</h1>
+    <p class="hero-tagline">One Chat. One Community. One Vibe.</p>
+    <p class="hero-desc">Welcome to Eagle Army — a Snapchat community built around friendship, entertainment, conversations and unforgettable moments.</p>
+    <div class="hero-actions">
+      <a href="#snapchat" class="btn btn-primary">Join the Community</a>
+      <a href="#community" class="btn btn-ghost">Explore Eagle Army</a>
+    </div>
+  </div>
+
+  <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-text reveal">
+      <span class="eyebrow-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 L13 10 L20 13 L13 12 L12 21 L11 12 L4 13 L11 10 Z" fill="#c6a15b"/></svg>
+        About the community
+      </span>
+      <h2 class="section-title">This is where the chat never gets old.</h2>
+      <p>Eagle Army is a Snapchat group chat where people come together to talk, share, laugh and create memories. The community is owned and managed by Azlan.</p>
+    </div>
+    <div class="owner-card reveal">
+      <span class="tag">OWNER</span>
+      <div class="name">Azlan</div>
+      <p class="role">Runs the chat. Sets the vibe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMMUNITY ================= -->
+<section class="community" id="community">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 L13 10 L20 13 L13 12 L12 21 L11 12 L4 13 L11 10 Z" fill="#c6a15b"/></svg>
+        What you're joining
+      </span>
+      <h2 class="section-title">Built on real conversations, every day.</h2>
+    </div>
+
+    <div class="card-grid reveal">
+      <div class="feature-card">
+        <span class="feature-icon">🦅</span>
+        <h3>Strong Community</h3>
+        <p>A place where members connect and interact.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💬</span>
+        <h3>Daily Conversations</h3>
+        <p>Chats, discussions, jokes and random moments.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔥</span>
+        <h3>Good Vibes</h3>
+        <p>A fun and welcoming community atmosphere.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⭐</span>
+        <h3>Memorable Moments</h3>
+        <p>A place for conversations and friendships that people remember.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OWNER ================= -->
+<section class="owner-section" id="owner">
+  <div class="wrap reveal">
+    <div class="owner-avatar">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 L13 10 L20 13 L13 12 L12 21 L11 12 L4 13 L11 10 Z" fill="currentColor"/></svg>
+    </div>
+    <div class="founder-name">AZLAN</div>
+    <div class="founder-title">FOUNDER &amp; OWNER OF EAGLE ARMY</div>
+    <p class="founder-line">The person behind the Eagle Army community.</p>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq" id="faq">
+  <div class="wrap faq-layout">
+    <div class="faq-intro reveal">
+      <span class="eyebrow-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 L13 10 L20 13 L13 12 L12 21 L11 12 L4 13 L11 10 Z" fill="#c6a15b"/></svg>
+        Good to know
+      </span>
+      <h2 class="section-title">Frequently asked questions.</h2>
+      <p>Everything you might want to know before you join Eagle Army. Can't find your answer? Reach out once you're in the chat.</p>
+    </div>
+
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What is Eagle Army?</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Eagle Army is a Snapchat group chat and community where members talk, share, joke around and build friendships. It's owned and managed by Azlan.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Who owns and runs Eagle Army?</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Eagle Army is founded and owned by Azlan, who manages the community and sets the tone for the chat.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I join Eagle Army?</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Tap "Open Snapchat" in the section below, or add <strong>@damn_azlan786x</strong> directly on Snapchat to get into the chat.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Is there a cost to join?</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <p>No. Eagle Army is a free Snapchat group chat — there's no membership fee to be part of the community.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What kind of content is shared in the chat?</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Everyday conversation — chats, jokes, discussions and whatever's on people's minds. It's an active, casual chat rather than a themed feed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SNAPCHAT ================= -->
+<section class="snap" id="snapchat">
+  <div class="wrap">
+    <div class="snap-panel reveal">
+      <svg class="snap-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 2c-3 0-5 2.2-5 5.3v1.9c-.6.3-1.6.5-2.2.5-.5 0-.8.4-.6.9.4 1 1.4 1.7 2.3 2.1-.1.4-.5 1.1-1.6 1.7-.6.3-1.4.6-2.3.8-.4.1-.6.6-.3.9.5.6 1.7 1.1 3.5 1.3.1.3.2.7.3 1 .1.3.4.5.8.4.6-.1 1.7-.3 2.6.2.9.5 1.6 1.4 2.5 1.4s1.6-.9 2.5-1.4c.9-.5 2-.3 2.6-.2.4.1.7-.1.8-.4.1-.3.2-.7.3-1 1.8-.2 3-.7 3.5-1.3.3-.3.1-.8-.3-.9-.9-.2-1.7-.5-2.3-.8-1.1-.6-1.5-1.3-1.6-1.7.9-.4 1.9-1.1 2.3-2.1.2-.5-.1-.9-.6-.9-.6 0-1.6-.2-2.2-.5V7.3C17 4.2 15 2 12 2z"/>
+      </svg>
+      <h2>Find Us on Snapchat</h2>
+      <p>Want to be part of Eagle Army? Join the conversation on Snapchat.</p>
+      <span class="snap-handle"><span class="live-dot"></span>@damn_azlan786x</span>
+      <a href="https://www.snapchat.com/add/damn_azlan786x" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="snapchatBtn">Open Snapchat</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-brand">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3 L13 10 L20 13 L13 12 L12 21 L11 12 L4 13 L11 10 Z" fill="currentColor"/></svg>
+      EAGLE ARMY
+    </div>
+    <p class="foot-tag">Built for the community. Powered by good vibes.</p>
+    <div class="foot-links">
+      <a href="#top">Home</a>
+      <a href="#about">About</a>
+      <a href="#community">Community</a>
+      <a href="#owner">Owner</a>
+      <a href="#faq">FAQ</a>
+      <a href="#snapchat">Snapchat</a>
+    </div>
+    <p class="copyright">© 2026 Eagle Army. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav background on scroll
+  const nav = document.getElementById('siteNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive:true });
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('in-view');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Subtle cursor-follow glow on feature cards
+  document.querySelectorAll('.feature-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+
+  // Mobile menu toggle
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  function closeMobileMenu(){
+    mobileMenu.classList.remove('open');
+    navToggle.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileMenu));
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMobileMenu();
+  });
+
+  // FAQ accordion (single-open, smooth height transition)
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const question = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    question.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+
+      document.querySelectorAll('.faq-item.open').forEach(openItem => {
+        if (openItem !== item){
+          openItem.classList.remove('open');
+          openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          openItem.querySelector('.faq-answer').style.maxHeight = null;
+        }
+      });
+
+      if (isOpen){
+        item.classList.remove('open');
+        question.setAttribute('aria-expanded', 'false');
+        answer.style.maxHeight = null;
+      } else {
+        item.classList.add('open');
+        question.setAttribute('aria-expanded', 'true');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    const openAnswer = document.querySelector('.faq-item.open .faq-answer');
+    if (openAnswer) openAnswer.style.maxHeight = openAnswer.scrollHeight + 'px';
+  }, { passive:true });
+</script>
+
+</body>
+</html>
